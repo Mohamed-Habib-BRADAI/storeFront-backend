@@ -5,16 +5,16 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 ## API Endpoints
 #### Products
-- Index 
-- Show
-- Create [token required]
+- Index : '/products' [GET]
+- Show : '/products/:id' [GET]
+- Create [token required] : '/products' [POST]
 - [OPTIONAL] Top 5 most popular products 
-- [OPTIONAL] Products by category (args: product category)
+- [OPTIONAL] Products by category (args: product category)  : '/products/:category' [GET]
 
 #### Users
-- Index [token required]
-- Show [token required]
-- Create N[token required]
+- Index [token required] : '/users' [GET]
+- Show [token required] : '/users/:id' [GET]
+- Create N[token required] : '/users' [POST]
 
 #### Orders
 - Current Order by user (args: user id)[token required]
@@ -40,3 +40,14 @@ These are the notes from a meeting with the frontend developer that describe wha
 - user_id
 - status of order (active or complete)
 
+## Postgres database tables
+
+#### products
+Products (id: number[primary key], name: varchar, price: number, category: varchar)
+#### users
+Users (id: number[primary key], firstName: varchar, lastName: varchar, password: varchar)
+#### orders
+Orders (id: number[primary key], status: varchar, user_id: number[foreign key to users table],)
+#### order_products
+
+OrderProducts (id: number[primary key], quantity: number, order_id: number[foreign key to orders table], product_id: number[foreign key to products table] )
