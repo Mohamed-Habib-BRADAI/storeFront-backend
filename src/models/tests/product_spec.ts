@@ -1,41 +1,87 @@
 import {Product, ProductStore} from '../product'
+import supertest = require('supertest');
+import { User,UserStore } from '../user';
 
+
+import app from '../../server';
 const store = new ProductStore()
+const userStore = new UserStore()
+const request = supertest(app);
+import jwt from 'jsonwebtoken';
+
+
+let user: User;
+let token: string
+describe('Test endpoint response', () => {
+    beforeAll(async () => {
+        user = await userStore.create({
+            firstname: 'firstname',
+            lastname: 'lastname',
+            password: 'password',
+        });
+        if (process.env.TOKEN_SECRET) {
+            token = jwt.sign({user: user}, process.env.TOKEN_SECRET)
+        }
+    });
+
+    it('gets the /products endpoint ', async done => {
+        const response = await request.get(
+            '/products'
+        );
+        expect(response.status).toBe(200);
+        done();
+    });
+    it('post the /products endpoint ', async done => {
+        const response = await request.post(
+            '/products'
+        )
+        expect(response.status).toBe(401);
+        done();
+    });
+    it('show the /products/1 endpoint ', async done => {
+        const response = await request.get(
+            '/products/1'
+        );
+        expect(response.status).toBe(200);
+        done();
+    });
+
+    it('delete the /products endpoint ', async done => {
+        const response = await request.delete(
+            '/products'
+        );
+        expect(response.status).toBe(200);
+        done();
+    });
+});
 
 describe("Product Model", () => {
-    it('should have an index method', () => {
-        console.log(1)
+    beforeAll(async () => {
+        await userStore.reset();
+        await store.reset();
+    });
 
+    it('should have an index method', () => {
         expect(store.index).toBeDefined();
     });
 
     it('should have a show method', () => {
-        console.log(2)
-
         expect(store.show).toBeDefined();
     });
 
     it('should have a create method', () => {
-        console.log(3)
-
         expect(store.create).toBeDefined();
     });
 
     it('should have a update method', () => {
-        console.log(4)
-
         expect(store.create).toBeDefined();
     });
 
     it('should have a delete method', () => {
-        console.log(5)
-
         expect(store.delete).toBeDefined();
     });
 
     it('create method should add a product', async () => {
-        console.log(6)
-
         const result = await store.create({
             name: 'hat',
             price: 25,
@@ -50,7 +96,6 @@ describe("Product Model", () => {
     });
 
     it('index method should return a list of products', async () => {
-        console.log(7)
 
         const result = await store.index();
         expect(result).toEqual([{
@@ -72,7 +117,7 @@ describe("Product Model", () => {
     });
 
     it('delete method should remove the product', async () => {
-        store.delete(1);
+        await store.delete('1');
         const result = await store.index()
         expect(result).toEqual([]);
     });

@@ -22,3 +22,5 @@ user_routes(app);
 app.listen(port, function () {
     console.log(`starting app on: ${address}`)
 })
+
+export default app;

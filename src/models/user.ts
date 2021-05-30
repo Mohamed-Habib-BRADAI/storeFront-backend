@@ -65,13 +65,15 @@ export class UserStore {
     }
     async delete(id: string): Promise<User> {
         try {
-            const sql = 'DELETE FROM users WHERE id=($1)'
+            const sql = 'DELETE FROM orders WHERE user_id=($1)'
+
+            const sql1 = 'DELETE FROM users WHERE id=($1)'
             // @ts-ignore
             const conn = await client.connect()
 
             const result = await conn.query(sql, [id])
-
-            const user = result.rows[0]
+            const result1 = await conn.query(sql1, [id])
+            const user = result1.rows[0]
 
             conn.release()
 
@@ -99,4 +101,18 @@ export class UserStore {
 
         return null
     }
+    async reset ():Promise<void> {
+        try {
+            const sql = 'TRUNCATE users RESTART IDENTITY CASCADE'
+            // @ts-ignore
+            const conn = await client.connect()
+
+            const result = await conn.query(sql)
+            conn.release()
+
+        } catch (err) {
+            throw new Error(`Could not reset users`)
+        }
+    }
+
 }

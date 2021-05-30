@@ -3,8 +3,6 @@ import dotenv from 'dotenv';
 import {Pool} from 'pg';
 
 dotenv.config();
-console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-
 
 const {
     POSTGRES_HOST,
@@ -15,9 +13,9 @@ const {
     ENV
 } = process.env
 
+//we can't declare type of client otherwise we can't export it
 let client
 if (ENV=='test') {
-    console.log('2222222222222222222');
     client = new Pool({
         host: POSTGRES_HOST,
         database: POSTGRES_TEST_DB,
@@ -25,8 +23,7 @@ if (ENV=='test') {
         password: POSTGRES_PASSWORD
     })
 }
-if (ENV=='dev') {
-    console.log('3333333333333333333333');
+else if (ENV=='dev') {
     client = new Pool({
         host: POSTGRES_HOST,
         database: POSTGRES_DB,
@@ -35,6 +32,5 @@ if (ENV=='dev') {
     })
     
 }
-console.log('444444444444444444444');
 
 export default client
