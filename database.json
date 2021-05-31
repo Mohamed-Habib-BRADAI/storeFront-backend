@@ -1,16 +1,16 @@
 {
   "dev": {
     "driver": "pg",
-    "host": "localhost",
-    "database": "storefront",
-    "user": "user1",
-    "password": "password"
+    "host":{"ENV": "POSTGRES_HOST"},
+    "database": {"ENV": "POSTGRES_TEST_DB"},
+    "user":{"ENV": "POSTGRES_USER"},
+    "password": {"ENV": "POSTGRES_PASSWORD"}
   },
   "test": {
     "driver": "pg",
-    "host": "localhost",
-    "database": "storefront_test",
-    "user": "user1",
-    "password": "password"
+    "host": {"ENV": "POSTGRES_HOST"},
+    "database": {"ENV": "POSTGRES_DB"},
+    "user":{"ENV": "POSTGRES_USER"},
+    "password": {"ENV": "POSTGRES_PASSWORD"}
   }
 }

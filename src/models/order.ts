@@ -47,6 +47,7 @@ export class OrderStore {
 
     async create(o: Order): Promise<Order> {
         try {
+            console.log('orderToAdd',o)
             const sql = 'INSERT INTO orders (status, user_id) VALUES($1, $2) RETURNING *'
             // @ts-ignore
             const conn = await client.connect()
@@ -129,6 +130,20 @@ export class OrderStore {
             return result.rows
         } catch (err) {
             throw new Error(`Could not find orders for user ${userId}: ${err}`)
+        }
+    }
+    async reset ():Promise<void> {
+        try {
+            const sql = 'TRUNCATE order_products RESTART IDENTITY CASCADE'
+            const sql1 = 'TRUNCATE orders RESTART IDENTITY CASCADE'
+            // @ts-ignore
+            const conn = await client.connect()
+
+            const result = await conn.query(sql)
+            const result1 = await conn.query(sql1)
+            conn.release()
+        } catch (err) {
+            throw new Error(`Could not reset orders`)
         }
     }
 }

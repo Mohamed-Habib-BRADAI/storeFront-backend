@@ -18,7 +18,10 @@ ENV=test
 BCRYPT_PASSWORD=udacity-full-javascript
 SALT_ROUNDS=10
 TOKEN_SECRET=token_secret
-- create 2 databases (storefront, storefront_test) using psql postgres 
+- use this command line to access psql postgres ( psql postgres)
+- create 2 databases (storefront, storefront_test) using psql postgres : CREATE DATABASE storefront then CREATE DATABASE storefront_test
+- use your postgres login and passward to update the .ENV varaible
+(POSTGRES_USER and POSTGRES_PASSWORD)
 - run the migrations using the commande line : db-migrate up
 - run the project using the commande line : yarn watch
 - Node js is running on port 3000 and psql postgres is on port 5432

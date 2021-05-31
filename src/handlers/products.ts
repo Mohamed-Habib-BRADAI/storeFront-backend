@@ -19,7 +19,7 @@ const create = async (req: Request, res: Response) => {
             category: req.body.category,
             price: req.body.price
         }
-
+        console.log('createProduct', product);
         const newProduct = await store.create(product);
         res.json(newProduct);
     } catch(err) {
