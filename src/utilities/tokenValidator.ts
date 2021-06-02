@@ -1,5 +1,6 @@
 import express, {Request, Response} from 'express';
 import jwt from 'jsonwebtoken';
+// Create token Validator middleware
 
 const verifyAuthToken = (req: Request, res: Response, next: () => void) => {
     try {
