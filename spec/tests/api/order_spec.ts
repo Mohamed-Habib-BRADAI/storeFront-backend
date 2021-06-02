@@ -62,7 +62,7 @@ describe('Test endpoint response', () => {
     it('delete the /orders endpoint ', async done => {
         const response = await request.delete(
             '/orders'
-        );
+        ).auth(token,{type:"bearer"});
         expect(response.status).toBe(200);
         done();
     });

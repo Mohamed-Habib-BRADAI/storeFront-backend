@@ -37,7 +37,7 @@ const product_routes=(app:express.Application) => {
 app.get('/products',index);
 app.get('/products/:id', show)
 app.post('/products',verifyAuthToken ,create)
-app.delete('/products', destroy)
+app.delete('/products',verifyAuthToken , destroy)
 }
 
 export default product_routes

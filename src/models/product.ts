@@ -68,7 +68,6 @@ export class ProductStore {
 
             const result1 = await conn.query(sql1, [id])
             const product = result1.rows[0]
-            console.log('delete product', result1);
             conn.release()
             return product
         } catch (err) {
